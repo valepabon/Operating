@@ -1,4 +1,4 @@
-/package ur_os;
+package ur_os;
 
 import java.util.*;
 
