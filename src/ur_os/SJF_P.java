@@ -8,7 +8,10 @@ public class SJF_P extends Scheduler {
 
     SJF_P(OS os) {
         super(os);
-        colaListos = new PriorityQueue<>((p1, p2) -> Integer.compare(p1.getRemainingTimeInCurrentBurst(), p2.getRemainingTimeInCurrentBurst()));
+        colaListos = new PriorityQueue<>((p1, p2) -> Integer.compare(
+            p1.getPBL().getRemainingTimeInCurrentBurst(), 
+            p2.getPBL().getRemainingTimeInCurrentBurst()
+        ));
     }
 
     @Override
@@ -37,3 +40,4 @@ public class SJF_P extends Scheduler {
         }
     }
 }
+
