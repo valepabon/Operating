@@ -5,6 +5,7 @@ import java.util.PriorityQueue;
 public class SJF_P extends Scheduler {
 
     private PriorityQueue<Process> colaListos;
+    private boolean cpuIdle = true; // Indica si la CPU está inactiva
 
     SJF_P(OS os) {
         super(os);
@@ -18,11 +19,14 @@ public class SJF_P extends Scheduler {
     public void getNext(boolean cpuEmpty) {
         if (!colaListos.isEmpty() && cpuEmpty) {
             Process p = colaListos.poll();
+            cpuIdle = false; // La CPU ya no está inactiva
             System.out.println("[SCHEDULER] Proceso " + p.getPid() + " asignado a la CPU.");
             os.interrupt(InterruptType.SCHEDULER_RQ_TO_CPU, p);
-        } else if (cpuEmpty) {
-            System.out.println("[SCHEDULER] CPU inactiva, no hay procesos en cola.");
-            os.interrupt(InterruptType.SCHEDULER_CPU_EMPTY, null); // Indica CPU inactiva
+        } else if (cpuEmpty && colaListos.isEmpty()) {
+            if (!cpuIdle) {
+                cpuIdle = true;
+                System.out.println("[SCHEDULER] CPU inactiva (-1).");
+            }
         }
     }
 
@@ -46,4 +50,5 @@ public class SJF_P extends Scheduler {
         }
     }
 }
+
 
