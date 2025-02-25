@@ -22,6 +22,7 @@ public class SJF_P extends Scheduler {
             os.interrupt(InterruptType.SCHEDULER_RQ_TO_CPU, p);
         } else if (cpuEmpty) {
             System.out.println("[SCHEDULER] CPU inactiva, no hay procesos en cola.");
+            os.interrupt(InterruptType.SCHEDULER_CPU_EMPTY, null); // Indica CPU inactiva
         }
     }
 
@@ -45,3 +46,4 @@ public class SJF_P extends Scheduler {
         }
     }
 }
+
